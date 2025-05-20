@@ -1,5 +1,7 @@
 package org.informatics;
 
+import org.informatics.domain.Publication;
+
 public class Edition {
     // да се добавят идентификатор
     private Publication publication;

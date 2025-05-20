@@ -2,6 +2,8 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.informatics.*;
+import org.informatics.domain.EmployeeSerializationException;
+import org.informatics.service.EmployeeSerializer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

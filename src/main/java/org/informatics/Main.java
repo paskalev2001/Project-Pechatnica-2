@@ -1,14 +1,18 @@
 package org.informatics;
+
+import org.informatics.domain.Publication;
+import org.informatics.service.PublicationService;
 import org.informatics.domain.PageSize;
 import org.informatics.domain.PaperType;
-
+import java.util.UUID;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
         //---- Publication Example
         System.out.println("------- Publication Example --------\n");
-        Publication book = new Publication(
+        Publication publication = new Publication(
+                UUID.randomUUID().toString(),
                 "Java Programming Basics",
                 500,
                 PageSize.A4,
@@ -17,16 +21,13 @@ public class Main {
                 5.00
         );
 
-        System.out.println(book);
+        System.out.println(publication);
 
-        double totalIncome = book.calculateTotalIncome();
-        System.out.printf("Total Profit from publication: %.2f lv.%n", totalIncome);
+        PublicationService publicationService = new PublicationService();
+        double totalIncome = publicationService.calculateTotalIncome(publication);
 
-        double basePaperPrice = book.getPaperType().getBasePriceForA5();
-        double multiplier = book.getPageSize().getPriceMultiplier();
-        double actualPaperPrice = basePaperPrice * multiplier;
-        System.out.printf("Price per page (fir %s, %s): %.2f lv.%n",
-                book.getPageSize(), book.getPaperType(), actualPaperPrice);
+        System.out.println(publication);
+        System.out.println("Total Income: " + totalIncome + " лв.");
 
         //---- Employees Example
 

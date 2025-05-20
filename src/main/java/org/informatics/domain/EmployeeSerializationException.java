@@ -1,4 +1,4 @@
-package org.informatics;
+package org.informatics.domain;
 
 public class EmployeeSerializationException extends Exception {
     public EmployeeSerializationException(String message) {

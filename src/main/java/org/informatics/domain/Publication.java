@@ -1,6 +1,7 @@
 package org.informatics.domain;
 
 public class Publication {
+    private String id;
     private String title;
     private int numberOfCopies;
     private PageSize pageSize;
@@ -8,13 +9,18 @@ public class Publication {
     private boolean isColor;
     private double pricePerCopy;
 
-    public Publication(String title, int numberOfCopies, PageSize pageSize, PaperType paperType, boolean isColor, double pricePerCopy) {
+    public Publication(String id, String title, int numberOfCopies, PageSize pageSize, PaperType paperType, boolean isColor, double pricePerCopy) {
+        this.id = id;
         this.title = title;
         this.numberOfCopies = numberOfCopies;
         this.pageSize = pageSize;
         this.paperType = paperType;
         this.isColor = isColor;
         this.pricePerCopy = pricePerCopy;
+    }
+
+    public String geId() {
+        return id;
     }
 
     public String getTitle() {
@@ -49,6 +55,7 @@ public class Publication {
     public String toString() {
         return "Publication{" +
                 "title='" + title + '\'' +
+                ", id=" + id +
                 ", numberOfCopies=" + numberOfCopies +
                 ", pageSize=" + pageSize +
                 ", paperType=" + paperType +
