@@ -1,53 +1,76 @@
 package org.informatics.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PrintingHouse {
     private final String name;
-    private final List<PrintingMachine> machines; // -> set
-    private final List<Employee> employees; // служителите не могат да се дублират . минава на Set
-    private final List<Edition> editions;
+    private final Set<PrintingMachine> machines;
+    private final Set<Employee> employees;
+    private final Set<Edition> editions;
     private final double managerBonusThreshold;
     private final double managerBonusPercent;
     private final int discountThresholdCopies;
     private final double discountPercent;
 
-    public PrintingHouse(String name, double managerBonusThreshold, double managerBonusPercent,
-                         int discountThresholdCopies, double discountPercent) {
+    public PrintingHouse(String name,
+                         double managerBonusThreshold,
+                         double managerBonusPercent,
+                         int discountThresholdCopies,
+                         double discountPercent) {
         this.name = name;
-        this.machines = new ArrayList<>();
-        this.employees = new ArrayList<>();
-        this.editions = new ArrayList<>();
         this.managerBonusThreshold = managerBonusThreshold;
         this.managerBonusPercent = managerBonusPercent;
         this.discountThresholdCopies = discountThresholdCopies;
         this.discountPercent = discountPercent;
+
+        this.machines = new HashSet<>();
+        this.employees = new HashSet<>();
+        this.editions = new HashSet<>();
+    }
+
+
+    public boolean addMachine(PrintingMachine machine) {
+        return machines.add(machine);
+    }
+
+    public boolean addEmployee(Employee employee) {
+        return employees.add(employee);
+    }
+
+    public boolean addEdition(Edition edition) {
+        return editions.add(edition);
+    }
+
+    public Set<PrintingMachine> getMachines() {
+        return machines;
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public Set<Edition> getEditions() {
+        return editions;
     }
 
     public String getName() {
         return name;
     }
 
-    public List<PrintingMachine> getMachines() {
-        return machines;
+    public double getManagerBonusThreshold() {
+        return managerBonusThreshold;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
+    public double getManagerBonusPercent() {
+        return managerBonusPercent;
     }
 
-    public List<Edition> getEditions() {
-        return editions;
+    public int getDiscountThresholdCopies() {
+        return discountThresholdCopies;
     }
 
-    @Override
-    public String toString() {
-        return "PrintingHouse{" +
-                "name='" + name + '\'' +
-                ", machines=" + machines.size() +
-                ", employees=" + employees.size() +
-                ", editions=" + editions.size() +
-                '}';
+    public double getDiscountPercent() {
+        return discountPercent;
     }
 }

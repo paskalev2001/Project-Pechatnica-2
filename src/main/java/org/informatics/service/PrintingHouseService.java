@@ -2,41 +2,89 @@ package org.informatics.service;
 
 import org.informatics.domain.*;
 
+import java.util.*;
+
 public class PrintingHouseService {
-    public void addMachine(PrintingMachine machine) {
-        machines.add(machine);
+
+    private final PrintingHouse printingHouse;
+
+    // Цена за най-малък размер (A5) по тип хартия, специфично за тази печатница
+    private final Map<PaperType, Double> basePaperPrices;
+
+    // Процент за увеличение при по-голям размер хартия
+    private final double sizeIncreasePercent;
+
+    public PrintingHouseService(PrintingHouse printingHouse,
+                                Map<PaperType, Double> basePaperPrices,
+                                double sizeIncreasePercent) {
+        this.printingHouse = printingHouse;
+        this.basePaperPrices = basePaperPrices;
+        this.sizeIncreasePercent = sizeIncreasePercent;
     }
 
-    public void addEmployee(Employee employee) {
-        employees.add(employee);
+    public double getPaperPrice(PaperType type, PageSize size) {
+        double basePrice = basePaperPrices.getOrDefault(type, 0.0);
+        int sizeDifference = size.ordinal(); // A5=0, A4=1, ...
+        return basePrice * Math.pow(1 + sizeIncreasePercent / 100.0, sizeDifference);
     }
 
-    public void addEdition(Edition edition) {
-        editions.add(edition);
+    public void loadPaperToMachine(String machineId, int quantity) {
+        PrintingMachine machine = findMachineById(machineId);
+        machine.setCurrentPaperLoaded(quantity);
     }
 
-    public void printEdition(Edition edition) {
-        for (PrintingMachine machine : machines) {
-            try {
-                machine.printEdition(edition);
-                return; // успешно отпечатано
-            } catch (Exception ignored) {
-                // Продължава към следващата машина
-            }
+    private final PrintingMachineService printingMachineService = new PrintingMachineService();
+
+    public void printEdition(String machineId, Publication publication, boolean isColor, int copies) {
+        if (copies <= 0) {
+            throw new IllegalArgumentException("Броят копия трябва да е положителен.");
         }
-        throw new IllegalStateException("No suitable machine available to print edition: " + edition.getPublication().getTitle());
+
+        PrintingMachine machine = findMachineById(machineId);
+
+        if (isColor && !machine.isColorCapable()) {
+            throw new IllegalArgumentException("Машината не поддържа цветен печат.");
+        }
+
+        String editionId = UUID.randomUUID().toString(); // или друга логика за ID
+        Edition edition = new Edition(editionId, publication, copies, isColor);
+
+        printingMachineService.printEdition(machine, edition);
     }
 
-    public double calculateSalaries() {
+    public double calculateSalaryExpenses() {
         double total = 0.0;
-        double income = calculateTotalIncome();
-
-        for (Employee emp : employees) {
-            double salary = emp.getBaseSalary();
-            if (emp instanceof Manager && income > managerBonusThreshold) {
-                salary += salary * (managerBonusPercent / 100.0);
+        for (Employee e : printingHouse.getEmployees()) {
+            double base = e.getBaseSalary();
+            if (e instanceof Manager) {
+                double income = calculateTotalIncome();
+                if (income >= printingHouse.getManagerBonusThreshold()) {
+                    base += base * printingHouse.getManagerBonusPercent() / 100.0;
+                }
             }
-            total += salary;
+            total += base;
+        }
+        return total;
+    }
+
+    public double calculatePaperExpenses() {
+        double total = 0.0;
+
+        for (PrintingMachine m : printingHouse.getMachines()) {
+            for (Map.Entry<Edition, Integer> entry : m.getPrintedEditions().entrySet()) {
+                Edition edition = entry.getKey();
+                int copies = edition.getCopiesPrinted();
+                Publication pub = edition.getPublication();
+
+                PaperType type = pub.getPaperType();
+                PageSize size = pub.getPageSize();
+                int pagesPerCopy = pub.getPageCount();
+
+                int totalSheetsUsed = pagesPerCopy * copies;
+                double sheetPrice = getPaperPrice(type, size);
+
+                total += totalSheetsUsed * sheetPrice;
+            }
         }
 
         return total;
@@ -44,12 +92,12 @@ public class PrintingHouseService {
 
     public double calculateTotalIncome() {
         double total = 0.0;
-        for (Edition edition : editions) {
-            int copies = edition.getCopiesPrinted();
-            double pricePerCopy = edition.getPublication().getPricePerCopy();
+        for (Edition e : printingHouse.getEditions()) {
+            int copies = e.getCopiesPrinted();
+            double pricePerCopy = e.getPublication().getPricePerCopy();
 
-            if (copies > discountThresholdCopies) {
-                pricePerCopy *= (1 - discountPercent / 100.0);
+            if (copies > printingHouse.getDiscountThresholdCopies()) {
+                pricePerCopy *= 1 - printingHouse.getDiscountPercent() / 100.0;
             }
 
             total += pricePerCopy * copies;
@@ -57,59 +105,15 @@ public class PrintingHouseService {
         return total;
     }
 
-    public double calculatePaperExpenses() {
-        double total = 0.0;
-        for (Edition edition : editions) {
-            PaperType paperType = edition.getPublication().getPaperType();
-            PageSize size = edition.getPublication().getPageSize();
-
-            double basePrice = paperType.getBasePriceForA5();
-            double multiplier = size.getPriceMultiplier();
-            int pages = edition.getPublication().getNumberOfCopies(); // ако 1 брой = 1 стр.
-            int totalPages = edition.getTotalPagesPrinted();
-
-            total += basePrice * multiplier * totalPages;
-        }
-        return total;
+    public int getTotalPrintedPages(String machineId) {
+        PrintingMachine machine = findMachineById(machineId);
+        return machine.getTotalPagesPrinted();
     }
 
-    public double calculateProfit() {
-        return calculateTotalIncome() - calculateSalaries() - calculatePaperExpenses();
-    }
-
-    public void generateReport() {
-        System.out.println("==== REPORT FOR PRINTING HOUSE: " + name + " ====");
-        System.out.println("Editions printed:");
-        for (Edition edition : editions) {
-            System.out.printf(" - %s: %d copies printed, income: %.2f%n",
-                    edition.getPublication().getTitle(),
-                    edition.getCopiesPrinted(),
-                    edition.getPublication().getPricePerCopy() * edition.getCopiesPrinted());
-        }
-
-        double totalIncome = calculateTotalIncome();
-        double paperCosts = calculatePaperExpenses();
-        double salaryCosts = calculateSalaries();
-        double profit = totalIncome - paperCosts - salaryCosts;
-
-        System.out.printf("%nTotal income: %.2f%n", totalIncome);
-        System.out.printf("Paper expenses: %.2f%n", paperCosts);
-        System.out.printf("Salaries: %.2f%n", salaryCosts);
-        System.out.printf("Net profit: %.2f%n", profit);
-
-        System.out.println("\nEmployees:");
-        for (Employee e : employees) {
-            System.out.printf(" - %s, salary: %.2f%n", e.getName(), e.getBaseSalary());
-        }
-
-        System.out.println("\nPrinting Machines:");
-        for (PrintingMachine m : machines) {
-            System.out.printf(" - Machine: %s, pages printed: %d, loaded paper: %d%n",
-                    m.getId(),
-                    m.getTotalPagesPrinted(),
-                    m.getCurrentPaperLoaded());
-        }
-
-        System.out.println("==========================================\n");
+    private PrintingMachine findMachineById(String id) {
+        return printingHouse.getMachines().stream()
+                .filter(m -> m.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Няма такава машина: " + id));
     }
 }

@@ -8,8 +8,10 @@ public class Publication {
     private PaperType paperType;
     private boolean isColor;
     private double pricePerCopy;
+    private int pageCount;
 
-    public Publication(String id, String title, int numberOfCopies, PageSize pageSize, PaperType paperType, boolean isColor, double pricePerCopy) {
+    public Publication(String id, String title, int numberOfCopies, PageSize pageSize, PaperType paperType,
+                       boolean isColor, double pricePerCopy, int pageCount) {
         this.id = id;
         this.title = title;
         this.numberOfCopies = numberOfCopies;
@@ -17,6 +19,7 @@ public class Publication {
         this.paperType = paperType;
         this.isColor = isColor;
         this.pricePerCopy = pricePerCopy;
+        this.pageCount = pageCount;
     }
 
     public String geId() {
@@ -29,6 +32,10 @@ public class Publication {
 
     public int getNumberOfCopies() {
         return numberOfCopies;
+    }
+
+    public int getPageCount() {
+        return pageCount;
     }
 
     public PageSize getPageSize() {
