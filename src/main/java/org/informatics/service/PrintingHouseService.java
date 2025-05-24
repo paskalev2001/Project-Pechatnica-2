@@ -8,10 +8,8 @@ public class PrintingHouseService {
 
     private final PrintingHouse printingHouse;
 
-    // Цена за най-малък размер (A5) по тип хартия, специфично за тази печатница
     private final Map<PaperType, Double> basePaperPrices;
 
-    // Процент за увеличение при по-голям размер хартия
     private final double sizeIncreasePercent;
 
     public PrintingHouseService(PrintingHouse printingHouse,
@@ -24,7 +22,7 @@ public class PrintingHouseService {
 
     public double getPaperPrice(PaperType type, PageSize size) {
         double basePrice = basePaperPrices.getOrDefault(type, 0.0);
-        int sizeDifference = size.ordinal(); // A5=0, A4=1, ...
+        int sizeDifference = size.ordinal();
         return basePrice * Math.pow(1 + sizeIncreasePercent / 100.0, sizeDifference);
     }
 
@@ -46,7 +44,7 @@ public class PrintingHouseService {
             throw new IllegalArgumentException("Машината не поддържа цветен печат.");
         }
 
-        String editionId = UUID.randomUUID().toString(); // или друга логика за ID
+        String editionId = UUID.randomUUID().toString();
         Edition edition = new Edition(editionId, publication, copies, isColor);
 
         printingMachineService.printEdition(machine, edition);
