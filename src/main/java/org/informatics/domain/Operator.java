@@ -2,10 +2,9 @@ package org.informatics.domain;
 
 import java.io.Serializable;
 
-public class Operator extends Employee  implements Serializable {
-
-    public Operator(String name, double baseSalary, String department) {
-        super(name, baseSalary, department);
+public class Operator extends Employee implements Serializable {
+    public Operator(String id, String name, double baseSalary, String department) {
+        super(id, name, baseSalary, department);
     }
 
     @Override
@@ -15,6 +14,11 @@ public class Operator extends Employee  implements Serializable {
 
     @Override
     public String toString() {
-        return "Operator{" + "name='" + getName() + "', baseSalary=" + getBaseSalary() + "}";
+        return "Operator{" +
+                "id='" + getId() + '\'' +
+                ", name='" + getName() + '\'' +
+                ", baseSalary=" + getBaseSalary() +
+                ", department='" + getDepartment() + '\'' +
+                '}';
     }
 }

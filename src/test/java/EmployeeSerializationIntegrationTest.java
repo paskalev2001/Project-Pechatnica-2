@@ -27,8 +27,8 @@ public class EmployeeSerializationIntegrationTest {
     @BeforeEach
     void setUp() {
         // Sample employees
-        Employee emp1 = new Operator("Ivan", 2500, "Forklifting");
-        Employee emp2 = new Manager("Petyo", 3500, "SpreadSheeting", 10.25, 4500);
+        Employee emp1 = new Operator("01","Ivan", 2500, "Forklifting");
+        Employee emp2 = new Manager("02","Petyo", 3500, "SpreadSheeting", 10.25, 4500);
 
         employeeList = Arrays.asList(emp1, emp2);
 
