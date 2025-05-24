@@ -23,7 +23,7 @@ public class PrintingMachine {
     public int getTotalPagesPrinted() {
         return printedEditions.entrySet()
                 .stream()
-                .mapToInt(e -> e.getKey().getCopiesPrinted())
+                .mapToInt(e -> e.getKey().getPublication().getPageCount() * e.getValue())
                 .sum();
     }
 

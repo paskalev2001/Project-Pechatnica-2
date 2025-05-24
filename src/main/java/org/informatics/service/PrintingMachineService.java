@@ -10,7 +10,9 @@ public class PrintingMachineService {
         if (pm.getCurrentPaperLoaded() + sheets > pm.getMaxPaperCapacity()) {
             throw new IllegalArgumentException("Exceeds machine's paper capacity.");
         }
-        return pm.getCurrentPaperLoaded() + sheets;
+        int newLoaded = pm.getCurrentPaperLoaded() + sheets;
+        pm.setCurrentPaperLoaded(newLoaded);
+        return newLoaded;
     }
 
     public void printEdition(PrintingMachine pm, Edition edition) {
@@ -18,7 +20,7 @@ public class PrintingMachineService {
             throw new UnsupportedOperationException("This machine cannot print in color.");
         }
 
-        int requiredSheets = pm.getTotalPagesPrinted();
+        int requiredSheets = edition.getCopiesPrinted() * edition.getPublication().getPageCount();
 
         if (requiredSheets > pm.getCurrentPaperLoaded()) {
             throw new IllegalStateException("Not enough paper loaded to print this edition.");
