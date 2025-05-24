@@ -18,7 +18,8 @@ public class Main {
                 PageSize.A4,
                 PaperType.GLOSSY,
                 true,
-                5.00
+                5.00,
+                7000
         );
 
         System.out.println(publication);

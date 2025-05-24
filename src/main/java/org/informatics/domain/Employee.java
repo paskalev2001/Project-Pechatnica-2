@@ -6,8 +6,9 @@ public abstract class Employee implements Serializable {
     private String id;
     private String name;
     private double baseSalary;
+    private String department;
 
-    public Employee(String name, double baseSalary) {
+    public Employee(String name, double baseSalary, String department) {
         this.id = id;
         this.name = name;
         this.baseSalary = baseSalary;
@@ -29,7 +30,7 @@ public abstract class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "Employee{id= '" + id + "'name='" + name + "', baseSalary=" + baseSalary + "}";
+        return "Employee{id= '" + id + "'name='" + name + "', baseSalary=" + baseSalary + "', department="+department+"}";
 
     }
 }

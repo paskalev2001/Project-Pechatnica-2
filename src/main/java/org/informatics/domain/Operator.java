@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Operator extends Employee  implements Serializable {
 
-    public Operator(String name, double baseSalary) {
-        super(name, baseSalary);
+    public Operator(String name, double baseSalary, String department) {
+        super(name, baseSalary, department);
     }
 
     @Override
