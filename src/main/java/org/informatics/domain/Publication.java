@@ -12,6 +12,15 @@ public class Publication {
 
     public Publication(String id, String title, int numberOfCopies, PageSize pageSize, PaperType paperType,
                        boolean isColor, double pricePerCopy, int pageCount) {
+        if (numberOfCopies < 0) {
+            throw new IllegalArgumentException("Number of copies cannot be negative");
+        }
+        if (pricePerCopy < 0) {
+            throw new IllegalArgumentException("Price per copy cannot be negative");
+        }
+        if (pageCount < 0) {
+            throw new IllegalArgumentException("Page count cannot be negative");
+        }
         this.id = id;
         this.title = title;
         this.numberOfCopies = numberOfCopies;
@@ -55,6 +64,9 @@ public class Publication {
     }
 
     public void setPricePerCopy(double pricePerCopy) {
+        if (pricePerCopy < 0) {
+            throw new IllegalArgumentException("Price per copy cannot be negative");
+        }
         this.pricePerCopy = pricePerCopy;
     }
 
