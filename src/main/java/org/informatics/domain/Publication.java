@@ -3,10 +3,8 @@ package org.informatics.domain;
 public class Publication {
     private String id;
     private String title;
-    private int numberOfCopies;
     private PageSize pageSize;
     private PaperType paperType;
-    private boolean isColor;
     private double pricePerCopy;
     private int pageCount;
 
@@ -23,10 +21,8 @@ public class Publication {
         }
         this.id = id;
         this.title = title;
-        this.numberOfCopies = numberOfCopies;
         this.pageSize = pageSize;
         this.paperType = paperType;
-        this.isColor = isColor;
         this.pricePerCopy = pricePerCopy;
         this.pageCount = pageCount;
     }
@@ -39,9 +35,6 @@ public class Publication {
         return title;
     }
 
-    public int getNumberOfCopies() {
-        return numberOfCopies;
-    }
 
     public int getPageCount() {
         return pageCount;
@@ -55,9 +48,6 @@ public class Publication {
         return paperType;
     }
 
-    public boolean isColor() {
-        return isColor;
-    }
 
     public double getPricePerCopy() {
         return pricePerCopy;
@@ -75,10 +65,8 @@ public class Publication {
         return "Publication{" +
                 "title='" + title + '\'' +
                 ", id=" + id +
-                ", numberOfCopies=" + numberOfCopies +
                 ", pageSize=" + pageSize +
                 ", paperType=" + paperType +
-                ", isColor=" + isColor +
                 ", pricePerCopy=" + pricePerCopy +
                 '}';
     }
