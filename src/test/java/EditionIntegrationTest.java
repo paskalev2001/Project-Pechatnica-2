@@ -13,10 +13,8 @@ public class EditionIntegrationTest {
         Publication publication = new Publication(
                 "pub001",
                 "National Geographic",
-                10000,
                 PageSize.A4,
                 PaperType.GLOSSY,
-                true,
                 2.5,
                 120
         );

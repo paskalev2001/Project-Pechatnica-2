@@ -11,7 +11,7 @@ class PublicationServiceTest {
     @Test
     void testCalculateTotalIncome() {
         Publication pub = new Publication(
-                "abc", "Title", 20, PageSize.A4, PaperType.GLOSSY, false, 3.5, 100);
+                "abc", "Title",  PageSize.A4, PaperType.GLOSSY,  3.5, 100);
         PublicationService service = new PublicationService();
         double expected = 20 * 3.5;
         assertEquals(expected, service.calculateTotalIncome(pub));
@@ -20,7 +20,7 @@ class PublicationServiceTest {
     @Test
     void testCalculateTotalIncomeZeroCopies() {
         Publication pub = new Publication(
-                "abc", "Title", 0, PageSize.A4, PaperType.GLOSSY, false, 3.5, 100);
+                "abc", "Title",  PageSize.A4, PaperType.GLOSSY,  3.5, 100);
         PublicationService service = new PublicationService();
         assertEquals(0, service.calculateTotalIncome(pub));
     }
@@ -28,7 +28,7 @@ class PublicationServiceTest {
     @Test
     void testCalculateTotalIncomeZeroPrice() {
         Publication pub = new Publication(
-                "abc", "Title", 10, PageSize.A4, PaperType.GLOSSY, false, 0.0, 100);
+                "abc", "Title",  PageSize.A4, PaperType.GLOSSY, 0.0, 100);
         PublicationService service = new PublicationService();
         assertEquals(0, service.calculateTotalIncome(pub));
     }

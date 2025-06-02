@@ -10,25 +10,25 @@ import java.util.UUID;
 public class Main {
     public static void main(String[] args) {
         //---- Publication Example
-        System.out.println("------- Publication Example --------\n");
-        Publication publication = new Publication(
-                UUID.randomUUID().toString(),
-                "Java Programming Basics",
-                500,
-                PageSize.A4,
-                PaperType.GLOSSY,
-                true,
-                5.00,
-                7000
-        );
-
-        System.out.println(publication);
-
-        PublicationService publicationService = new PublicationService();
-        double totalIncome = publicationService.calculateTotalIncome(publication);
-
-        System.out.println(publication);
-        System.out.println("Total Income: " + totalIncome + " лв.");
+//        System.out.println("------- Publication Example --------\n");
+//        Publication publication = new Publication(
+//                UUID.randomUUID().toString(),
+//                "Java Programming Basics",
+//                500,
+//                PageSize.A4,
+//                PaperType.GLOSSY,
+//                true,
+//                5.00,
+//                7000
+//        );
+//
+//        System.out.println(publication);
+//
+//        PublicationService publicationService = new PublicationService();
+//        double totalIncome = publicationService.calculateTotalIncome(publication);
+//
+//        System.out.println(publication);
+//        System.out.println("Total Income: " + totalIncome + " лв.");
 
         //---- Employees Example
 

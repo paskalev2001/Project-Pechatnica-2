@@ -13,10 +13,8 @@ public class EditionUnitTest {
         Publication publication = new Publication(
                 "pub1",
                 "Science Weekly",
-                1000,
                 PageSize.A4,
                 PaperType.GLOSSY,
-                true,
                 2.0,
                 50
         );
@@ -33,10 +31,8 @@ public class EditionUnitTest {
         Publication publication = new Publication(
                 "pub2",
                 "Unit title",
-                1000,
                 PageSize.A4,
                 PaperType.GLOSSY,
-                true,
                 2.0,
                 50
         );
@@ -52,10 +48,8 @@ public class EditionUnitTest {
         Publication publication = new Publication(
                 "pub3",
                 "Unit title2",
-                1000,
                 PageSize.A4,
                 PaperType.GLOSSY,
-                true,
                 2.0,
                 50
         );

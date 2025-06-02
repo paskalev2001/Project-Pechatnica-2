@@ -8,11 +8,9 @@ public class Publication {
     private double pricePerCopy;
     private int pageCount;
 
-    public Publication(String id, String title, int numberOfCopies, PageSize pageSize, PaperType paperType,
-                       boolean isColor, double pricePerCopy, int pageCount) {
-        if (numberOfCopies < 0) {
-            throw new IllegalArgumentException("Number of copies cannot be negative");
-        }
+    public Publication(String id, String title, PageSize pageSize, PaperType paperType,
+                        double pricePerCopy, int pageCount) {
+
         if (pricePerCopy < 0) {
             throw new IllegalArgumentException("Price per copy cannot be negative");
         }

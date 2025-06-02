@@ -18,7 +18,7 @@ class PrintingHouseServiceTest {
         Map<PaperType, Double> prices = Map.of(PaperType.GLOSSY, 0.1, PaperType.NEWSPAPER, 0.05);
         service = new PrintingHouseService(house, prices, 20);
         pm = new PrintingMachine("pm1", true, 200, 30);
-        pub = new Publication("p1", "Magazine", 500, PageSize.A4, PaperType.GLOSSY, true, 2.0, 16);
+        pub = new Publication("p1", "Magazine", PageSize.A4, PaperType.GLOSSY,  2.0, 16);
         edition = new Edition("e1", pub, 10, true);
 
         house.addMachine(pm);
@@ -61,7 +61,7 @@ class PrintingHouseServiceTest {
         double noBonus = service.calculateSalaryExpenses();
         assertTrue(noBonus > 0);
 
-        Publication expensive = new Publication("expensive", "ExpensivePub", 2000, PageSize.A4, PaperType.GLOSSY, true, 6.0, 20);
+        Publication expensive = new Publication("expensive", "ExpensivePub",  PageSize.A4, PaperType.GLOSSY, 6.0, 20);
         house.addEdition(new Edition("e2", expensive, 2000, true)); // 2000 * 6 = 12,000 > 10,000 threshold
 
         double withBonus = service.calculateSalaryExpenses();
@@ -72,7 +72,7 @@ class PrintingHouseServiceTest {
 
     @Test
     void testCalculateTotalIncomeWithDiscount() {
-        Publication cheap = new Publication("cheap", "CheapPub", 150, PageSize.A4, PaperType.NEWSPAPER, false, 1.0, 8);
+        Publication cheap = new Publication("cheap", "CheapPub",  PageSize.A4, PaperType.NEWSPAPER,  1.0, 8);
         Edition discEdition = new Edition("e3", cheap, 150, false);
         house.addEdition(discEdition);
 

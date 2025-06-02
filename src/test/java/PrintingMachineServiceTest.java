@@ -17,7 +17,7 @@ class PrintingMachineServiceTest {
     void setup() {
         service = new PrintingMachineService();
         pm = new PrintingMachine("pm1", true, 500, 30);
-        pub = new Publication("p1", "Newspaper", 50, PageSize.A4, PaperType.NEWSPAPER, false, 0.5, 10);
+        pub = new Publication("p1", "Newspaper", PageSize.A4, PaperType.NEWSPAPER,  0.5, 10);
         editionBW = new Edition("123",pub,  10, false);
         editionColor = new Edition("123",pub,  10, true);
     }

@@ -15,7 +15,7 @@ class PrintingHouseTest {
         assertTrue(ph.addEmployee(emp));
         assertFalse(ph.addEmployee(emp)); // ensure no duplicates
 
-        Edition ed = new Edition("ed1", new Publication("p1", "Pub", 500, PageSize.A4, PaperType.GLOSSY, false, 2.0, 20), 100, false);
+        Edition ed = new Edition("ed1", new Publication("p1", "Pub",  PageSize.A4, PaperType.GLOSSY,  2.0, 20), 100, false);
         assertTrue(ph.addEdition(ed));
         assertFalse(ph.addEdition(ed));
     }
