@@ -8,7 +8,7 @@ public class PrintingMachine {
     private final int maxPaperCapacity;
     private final int pagesPerMinute;
     private int currentPaperLoaded;
-    private final Map<Edition, Integer> printedEditions; // къде е мястото на броя копия
+    private final Map<Edition, Integer> printedEditions;
 
     public PrintingMachine(String id, boolean isColorCapable, int maxPaperCapacity, int pagesPerMinute) {
         this.id = id;
